@@ -8,8 +8,9 @@ include(ROOT_DIR.'app/config/DatabaseConnect.php');
 
     $product = [];
     $id = @$_GET['id'];
-
-    $category = ["1" => "Case,", "2" => "CPU", "3" => "GPU", "4" => "Motherboard", "5" => "PSU", "6" => "RAM", "7" => "Storage"];
+    $category = ["1" => "electronics", "2" => "fashion", "3" => "home appliance"];
+    $category = ["1" => "Case", "2" => "CPU", "3" => "GPU", "4" => "Motherboard", "5" => "PSU", "6" => "RAM", 
+    "7"=> "Storage"];
 
 
 
@@ -45,19 +46,35 @@ require_once(ROOT_DIR."includes/navbar.php");
     <div class="container my-5 bg-bpod">
         <div class="container mt-5">
 
+        <?php if(isset($messSuc)){ ?>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <strong><?php echo $messSuc; ?></strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    <?php } ?>
+
+
+                    <?php if(isset($messErr)){ ?>
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong><?php echo $messErr; ?></strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        <?php } ?>
             <div class="row">
                 <!-- Product Image -->
                 <div class="col-md-6">
-                    <img src="<?php echo BASE_URL.$product["image_url"] ?>" alt="Product Image" class="img-fluid" style="height:500px">
+                    <img src="<?php echo BASE_URL.$product["image_url"] ?>" 
+                    alt="Product Image" class="img-fluid border border-warning border-5" style="height:500px">
                 </div>
 
                 <!-- Product Information -->
                  
                 <div class="col-md-6">
-                    
-                        <h2>Product Name Here</h2>
-                        <div class="mb-3"><span class="badge text-bg-info">category</span></div>
-                        <p class="lead text-warning fw-bold">Php 100.00 </p>
+                    <form action="<?php echo BASE_URL;?>app/cart/add_to_cart.php" method="POST">
+                    <input type="hidden" name="id" value="<?php echo $product["id"]; ?>">
+                        <h2><?php echo $product["product_name"] ?></h2>
+                        <div class="mb-3"><span class="badge text-bg-info"><?php echo $category[$product["category_id"]]; ?></span></div>
+                        <p class="lead text-warning fw-bold">Php <?php echo number_format ($product["unit_price"],2) ?></p>
                         <p>Product Description</p>
 
                         <!-- Quantity Selection -->
@@ -67,7 +84,7 @@ require_once(ROOT_DIR."includes/navbar.php");
                                 <button class="btn btn-outline-secondary" type="button" id="decrement-btn">-</button>
                                 <input type="number" id="quantity" name="quantity" class="form-control text-center" value="1" min="1" max="10" style="max-width: 60px;">
                                 <button class="btn btn-outline-secondary" type="button" id="increment-btn">+</button>
-                                <span class="input-group-text">/ Remaining Stocks: 10</span>
+                                <span class="input-group-text">/ Remaining Stocks: <?php echo $product["stocks"] ?></span>
                             </div>
                         </div>
 
@@ -75,7 +92,7 @@ require_once(ROOT_DIR."includes/navbar.php");
                         <div class="d-grid gap-2">
                             <button type="submit" class="btn btn-primary btn-lg">Add to Cart</button>
                         </div>
-                    
+                        </form>
                 </div>
                 
             </div>

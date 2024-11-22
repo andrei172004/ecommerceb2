@@ -64,3 +64,4 @@ require_once("includes/header.php");
     
     <!-- Footer -->
     <?php require_once(ROOT_DIR."includes/footer.php"); ?>
+    
