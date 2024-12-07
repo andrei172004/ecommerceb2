@@ -11,9 +11,9 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
   
     if(trim($password) == trim($confirmPassword)){
     $host = "localhost";
-    $database = "ecommerce_aravelo";
-    $dbusername = "aravelo";
-    $dbpassword = "A124^elo_2024";
+    $database = "ecommerce_proncesvalles";
+    $dbusername = "proncesvalles";
+    $dbpassword = "Pr0nce2va!!es_2024";
 
     $dsn = "mysql: host=$host;dbname=$database;";
     try {

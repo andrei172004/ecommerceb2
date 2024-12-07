@@ -2,18 +2,18 @@
 
 class DatabaseConnect{
 
-        /*private $host = "localhost";
-        private $database = "ecommerce";
+        private $host = "localhost";
+        private $database = "ecommerceb2";
         private $dbusername = "root";
         private $dbpassword = "";
-        private $conn = null;*/
+        private $conn = null;
 
 
-         private $host = " localhost";
-         private $database = "ecommerce_proncesvalles";
-         private $dbusername = "proncesvalles";
-         private $dbpassword = "Pr0nce2va!!es_2024";
-         private $conn = null;
+        //  private $host = " localhost";
+        //  private $database = "ecommerce_proncesvalles";
+        //  private $dbusername = "proncesvalles";
+        //  private $dbpassword = "Pr0nce2va!!es_2024";
+        //  private $conn = null;
 
 
         

@@ -16,7 +16,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bindParam(':p_id', $productId);
         $stmt->execute();
 
-        $_SESSION["tama"]="product has been deleted";
+        $_SESSION["success"]="product has been deleted";
         header("location: ".BASE_URL."views/admin/products/index.php");
         exit;
 
