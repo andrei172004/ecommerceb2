@@ -1,56 +1,55 @@
-<?php 
+<?php
 session_start();
-//RECEIVE USER INPUT
-$fullname = $_POST["fullname"];
-$username = $_POST["username"];
-$password = $_POST["password"];
-$confirmPassword = $_POST["confirmPassword"];
 
-if($_SERVER["REQUEST_METHOD"] == "POST"){
-    
-    //VERIFY PASSWORD AND CONFIRMPASSWORD TO BE MATCH
+$fullname= $_POST["fullName"];
+$username= $_POST["username"];
+$password= $_POST["password"];
+$confirmPassword= $_POST["confirmPassword"];
+
+
+if($_SERVER["REQUEST_METHOD"]=="POST"){
+  
     if(trim($password) == trim($confirmPassword)){
-        //CONNECT DATABASE
-        
-        $host = "localhost";
-        $database = "ecommerceb2";
-        $dbusername = "root";
-        $dbpassword = "";
-        
-        $dsn = "mysql: host=$host;dbname=$database;";
-        try {
-            $conn = new PDO($dsn, $dbusername, $dbpassword);
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            
-            $stmt = $conn->prepare("INSERT INTO users (fullname,username,password,created_at,updated_at) VALUES (:p_fullname,:p_username,:p_password,NOW(),NOW())");
-            $stmt->bindParam(':p_fullname',$fullname);
-            $stmt->bindParam(':p_username',$username);
-            $stmt->bindParam(':p_password',$password);
+    $host = "localhost";
+    $database = "ecommerce_aravelo";
+    $dbusername = "aravelo";
+    $dbpassword = "A124^elo_2024";
 
-            $password = password_hash(trim($password),PASSWORD_BCRYPT);
+    $dsn = "mysql: host=$host;dbname=$database;";
+    try {
+        $conn = new PDO($dsn, $dbusername, $dbpassword);
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+        $stmt =$conn->prepare('INSERT INTO users (fullName,username,password,created_at,updated_at) VALUES(:p_fullName, :p_username, :p_password, Now(),Now())'); 
 
-            if ($stmt->execute()){
-                header("location: /registration.php?");
-                $_SESSION["success"] = "Registration Successful";
-                exit;
-            } else {
-                header("location: /registration.php?");
-                $_SESSION["error"] = "Insert Error";
-                exit;
-            }
+        $stmt->bindParam(':p_fullName',$fullname);
+        $stmt->bindParam(':p_username',$username);
+        $stmt->bindParam(':p_password',$password);
+        $password = password_hash(trim($password),PASSWORD_BCRYPT);
 
-        } catch (Exception $e){
-            header("location: /registration.php?");
-            $_SESSION["error"] = "Username Already Exist";
+        if($stmt->execute()){
+            header("location: /registration.php");
+            $_SESSION["tama"]="SUCCESS";
+            exit;
+        } else { 
+            header("location: /registration.php");
+            $_SESSION["mali"]="Insert error";
+            exit;
+
         }
-    } else {
 
-        header("location: /registration.php?");
-        $_SESSION["error"] = "Password Mismatch";
-        exit;
-    }
-   
-    //INSERT RECORD
+    } catch (Exception $e){
+    echo "Connection Failed: " . $e->getMessage();
+        }
 
-}
+        }
+            else{
+                header("location: /registration.php");
+                $_SESSION["mali"]="Insert error";
+                exit;
+
+            }
+            
+                }
+        
 ?>
